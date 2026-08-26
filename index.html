@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hikmal Studio - Graphic Designer & Portfolio</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-color: #38bdf8;
+            --accent-hover: #0284c7;
+            --accent-green: #22c55e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND STAR FIELD & SHOOTING STARS --- */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Bintang Berkelip (Twinkling Stars) */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: twinkle var(--duration, 4s) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(0.8); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        /* Bintang Jatuh (Shooting Stars) */
+        .shooting-star {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(56, 189, 248, 0.8), rgba(255, 255, 255, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+            animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            top: calc(50% - 1px);
+            right: 0;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(255, 255, 255, 0), rgba(56, 189, 248, 0.8), rgba(255, 255, 255, 0));
+            transform: translateX(50%) rotate(45deg);
+            border-radius: 100%;
+        }
+
+        /* Penempatan & Delay Bintang Jatuh Halus */
+        .star-1 {
+            top: 5%;
+            left: 50%;
+            width: 80px;
+            animation-delay: 0s;
+        }
+        .star-2 {
+            top: 25%;
+            left: 80%;
+            width: 110px;
+            animation-delay: 2.2s;
+        }
+        .star-3 {
+            top: 45%;
+            left: 30%;
+            width: 90px;
+            animation-delay: 4.5s;
+        }
+        .star-4 {
+            top: 70%;
+            left: 75%;
+            width: 100px;
+            animation-delay: 6.8s;
+        }
+
+        @keyframes tail {
+            0% { width: 0; opacity: 0; }
+            30% { width: 100px; opacity: 0.7; }
+            100% { width: 0; opacity: 0; }
+        }
+
+        @keyframes shooting {
+            0% { transform: translateX(0) translateY(0) rotate(-45deg); }
+            100% { transform: translateX(-300px) translateY(300px) rotate(-45deg); }
+        }
+
+        /* --- BACKGROUND FLOATING ORBS --- */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.25;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #38bdf8;
+            top: 10%;
+            left: -100px;
+            animation: floatOrb1 12s ease-in-out infinite alternate;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: #818cf8;
+            bottom: 15%;
+            right: -100px;
+            animation: floatOrb2 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatOrb1 {
+            0% { transform: translateY(0) translateX(0) scale(1); }
+            50% { transform: translateY(120px) translateX(50px) scale(1.1); }
+            100% { transform: translateY(-50px) translateX(80px) scale(0.9); }
+        }
+
+        @keyframes floatOrb2 {
+            0% { transform: translateY(0) translateX(0) scale(1); }
+            50% { transform: translateY(-100px) translateX(-60px) scale(1.15); }
+            100% { transform: translateY(60px) translateX(-30px) scale(0.95); }
+        }
+
+        /* --- KEYFRAME ANIMATIONS --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(56, 189, 248, 0.7); }
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(6deg); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- HERO / HEADER --- */
+        header {
+            text-align: center;
+            padding: 60px 20px 45px;
+            background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 70%);
+            border-radius: 24px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(8px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .avatar {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 34px;
+            color: white;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .avatar i {
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        header p.badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-color);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 10px;
+            border: 1px solid var(--border-glow);
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            padding: 14px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-whatsapp {
+            background: var(--accent-green);
+            color: white;
+            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            background: #16a34a;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background: rgba(56, 189, 248, 0.1);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
+        }
+
+        /* --- ANIMATED SECTIONS (SCROLL EFFECT) --- */
+        .animated-section {
+            margin-bottom: 55px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animated-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            border: none;
+            padding: 0;
+            margin-bottom: 6px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        h2.category-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 12px;
+        }
+
+        /* --- GRID & CARDS ANIMATION --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: var(--accent-color);
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.25);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.2) rotate(-6deg);
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 15px;
+        }
+
+        .price-tag {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 6px 12px;
+            border-radius: 8px;
+            width: fit-content;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-glow);
+        }
+
+        .btn-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: auto;
+            cursor: pointer;
+            transition: gap 0.2s ease;
+        }
+
+        .card:hover .btn-preview {
+            gap: 12px;
+        }
+
+        /* --- ADVANTAGES --- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid var(--border-glow);
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .feature-item i {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+            margin-top: 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover i {
+            transform: scale(1.25) rotate(10deg);
+        }
+
+        .feature-item h4 {
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+
+        .feature-item p {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+        }
+
+        /* --- SKILLS & TOOLS --- */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--accent-color);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+        }
+
+        /* --- MODAL POPUP --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--bg-color);
+            width: 100%;
+            max-width: 900px;
+            height: 85vh;
+            border-radius: 16px;
+            border: 1px solid var(--border-glow);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            animation: zoomIn 0.3s ease-out forwards;
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            background: rgba(30, 41, 59, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        .modal-body { flex: 1; }
+
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BACKGROUND STARS & SHOOTING STARS -->
+    <div class="stars-container" id="starsContainer">
+        <div class="shooting-star star-1"></div>
+        <div class="shooting-star star-2"></div>
+        <div class="shooting-star star-3"></div>
+        <div class="shooting-star star-4"></div>
+    </div>
+
+    <!-- FLOATING BACKGROUND OBJECTS -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <!-- HERO HEADER -->
+    <header>
+        <div class="avatar"><i class="fa-solid fa-paintbrush"></i></div>
+        <h1>Hikmal Muhamad Irawan</h1>
+        <p class="badge">Graphic Designer • DKV Student</p>
+        <p style="margin-top: 15px; color: var(--text-muted); max-width: 620px; margin-left: auto; margin-right: auto;">
+            Halo, saya Hikmal, siswa jurusan Desain Komunikasi Visual (DKV). Saya membantu memvisualisasikan ide, branding, dan promosi produk menjadi karya grafis yang menarik & profesional.
+        </p>
+
+        <div class="hero-btns">
+            <a href="https://wa.me/6283866964801?text=Halo%20Hikmal,%20saya%20mau%20konsultasi%20desain%20nih!" target="_blank" class="btn btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> Konsultasi Jasa Desain
+            </a>
+            <a href="#portofolio" class="btn btn-outline">
+                <i class="fa-solid fa-layer-group"></i> Lihat Galeri Karya
+            </a>
+        </div>
+    </header>
+
+    <!-- FITUR KEUNGGULAN -->
+    <div class="features">
+        <div class="feature-item">
+            <i class="fa-solid fa-bolt"></i>
+            <div>
+                <h4>Pengerjaan Cepat</h4>
+                <p>Selesai tepat waktu sesuai kesepakatan.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <i class="fa-solid fa-rotate-left"></i>
+            <div>
+                <h4>Garansi Revisi</h4>
+                <p>Revisi minor agar hasil pas dengan keinginanmu.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <i class="fa-solid fa-file-export"></i>
+            <div>
+                <h4>File siap Pakai</h4>
+                <p>Mendapatkan file HD (PNG/JPG) & Siap Cetak (PDF).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKSI JASA & PRICING -->
+    <section id="services" class="animated-section">
+        <div class="section-title">
+            <h2>Layanan Jasa Desain</h2>
+            <p>Pilihan layanan visual untuk kebutuhan promosi, bisnis, maupun personal</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <i class="fa-solid fa-rocket card-icon"></i>
+                <h3>Desain Poster & Event</h3>
+                <p>Poster film, acara sekolah, pameran, hingga promosi konser musik modern.</p>
+                <span class="price-tag">Mulai Rp 50.000</span>
+                <a href="https://wa.me/6283866964801?text=Halo%20Hikmal,%20saya%20mau%20pesan%20Desain%20Poster" target="_blank" class="btn btn-whatsapp" style="justify-content: center; font-size: 0.85rem; padding: 10px;">
+                    <i class="fa-brands fa-whatsapp"></i> Pesan Poster
+                </a>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-store card-icon"></i>
+                <h3>Branding & Promo Produk</h3>
+                <p>Iklan komersial makanan/minuman, banner promosi, dan feed Instagram bisnis.</p>
+                <span class="price-tag">Mulai Rp 45.000</span>
+                <a href="https://wa.me/6283866964801?text=Halo%20Hikmal,%20saya%20mau%20pesan%20Desain%20Branding/Iklan" target="_blank" class="btn btn-whatsapp" style="justify-content: center; font-size: 0.85rem; padding: 10px;">
+                    <i class="fa-brands fa-whatsapp"></i> Pesan Branding
+                </a>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-wand-magic-sparkles card-icon"></i>
+                <h3>Manipulasi Foto & Mockup</h3>
+                <p>Editing foto tingkat lanjut, manipulasi efek objek, ganti background, & retouching.</p>
+                <span class="price-tag">Mulai Rp 35.000</span>
+                <a href="https://wa.me/6283866964801?text=Halo%20Hikmal,%20saya%20mau%20pesan%20Editing/Manipulasi%20Foto" target="_blank" class="btn btn-whatsapp" style="justify-content: center; font-size: 0.85rem; padding: 10px;">
+                    <i class="fa-brands fa-whatsapp"></i> Pesan Edit Foto
+                </a>
+            </div>
+
+            <div class="card">
+                <i class="fa-solid fa-font card-icon"></i>
+                <h3>Typography & Layout</h3>
+                <p>Eksplorasi tata letak teks artistik, quote poster, hingga merchandise kaos.</p>
+                <span class="price-tag">Mulai Rp 30.000</span>
+                <a href="https://wa.me/6283866964801?text=Halo%20Hikmal,%20saya%20mau%20pesan%20Typography%20Art" target="_blank" class="btn btn-whatsapp" style="justify-content: center; font-size: 0.85rem; padding: 10px;">
+                    <i class="fa-brands fa-whatsapp"></i> Pesan Typography
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI PORTOFOLIO -->
+    <section id="portofolio" class="animated-section">
+        <div class="section-title">
+            <h2>Galeri Karya & Portofolio</h2>
+            <p>Klik salah satu kartu di bawah untuk membuka preview karya secara langsung</p>
+        </div>
+
+        <!-- 1. POSTER FILM -->
+        <h2 class="category-title">Poster Film</h2>
+        <div class="grid" style="margin-bottom: 35px;">
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/15Ejm8jS7_73AJKqHbx9xjvAdhQriHM2e/preview', 'Eternal Orbit')">
+                <i class="fa-solid fa-rocket card-icon"></i>
+                <h3>Eternal Orbit</h3>
+                <p>Karya Desain Poster Bertema Sci-Fi</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1kvV8zPnvvPt8KJ9MVUIZ0lXPZrSWwkI6/preview', 'Echoes Of Mercy')">
+                <i class="fa-solid fa-image card-icon"></i>
+                <h3>Echoes Of Mercy</h3>
+                <p>Eksplorasi Komposisi Poster Visual</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+        </div>
+
+        <!-- 2. BRANDING & COMMERCIAL -->
+        <h2 class="category-title">Branding & Commercial</h2>
+        <div class="grid" style="margin-bottom: 35px;">
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1lkZ52o23wixMkVVDPNsNT-Lnj9YIvKzi/preview', 'Branding (Matcha Cake)')">
+                <i class="fa-solid fa-store card-icon"></i>
+                <h3>Matcha Cake Branding</h3>
+                <p>Karya Iklan Komersial Kue Matcha Jepang</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1CS1qiA_EtxLbC9zBp1d3Pkj2MEMDtSxX/preview', 'Commercial Project')">
+                <i class="fa-solid fa-bullhorn card-icon"></i>
+                <h3>Promosi Produk Komersial</h3>
+                <p>Desain Poster Burger</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1m7jxqt3VB30xIYfyMac863T_1yyuhYQc/preview', 'Commercial Design')">
+                <i class="fa-solid fa-box-open card-icon"></i>
+                <h3>Commercial Design</h3>
+                <p>Design Promosi Produk</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+        </div>
+
+        <!-- 3. TYPOGRAPHY ART -->
+        <h2 class="category-title">Typography Art</h2>
+        <div class="grid" style="margin-bottom: 35px;">
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1nsX-bYqp66nNhsNXqfckZmTdxszlLxVY/preview', 'Design Poster Pizza')">
+                <i class="fa-solid fa-font card-icon"></i>
+                <h3>Design Poster Pizza</h3>
+                <p>Eksplorasi Skala Huruf & Komposisi Teks</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1COYzyCCV1ZvhizgYyWC7lm3QPj50FROf/preview', 'Lettering & Layout Teks')">
+                <i class="fa-solid fa-vector-square card-icon"></i>
+                <h3>Lettering & Layout Teks</h3>
+                <p>Eksplorasi Grid & Hirarki Huruf</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+        </div>
+
+        <!-- 4. PHOTO EDITING & MANIPULATION -->
+        <h2 class="category-title">Photo Editing & Manipulation</h2>
+        <div class="grid" style="margin-bottom: 35px;">
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1bZ2pnCzUC4FDco5PpqygcLGox4RtN3sg/preview', '3D Water Splash Effect')">
+                <i class="fa-solid fa-wand-magic-sparkles card-icon"></i>
+                <h3>3D Water Splash Effect</h3>
+                <p>Efek Manipulasi Air & Penggabungan Objek</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1EDtIvw5d88GnhP3Lr-EB29COwF3vtOhx/preview', 'Digital Imaging & Retouch')">
+                <i class="fa-solid fa-image card-icon"></i>
+                <h3>Digital Imaging & Retouch</h3>
+                <p>Karya Manipulasi Foto Kreatif</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1qn5w8VBn-g56pSzDiOLxBqh9KI7XV6QK/preview', 'Advanced Photo Editing')">
+                <i class="fa-solid fa-pen-ruler card-icon"></i>
+                <h3>Advanced Photo Editing</h3>
+                <p>Penyesuaian Warna & Komposisi Digital</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+        </div>
+
+        <!-- 5. GRAPHIC DESIGN & LAINNYA -->
+        <h2 class="category-title">Graphic Design & Lainnya</h2>
+        <div class="grid">
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/12OS7bnKRf64jfUwpl12ks7SVpuJ5vL-h/preview', 'Visual Asset & Layout')">
+                <i class="fa-solid fa-camera card-icon"></i>
+                <h3>Visual Asset & Layout</h3>
+                <p>Karya Desain Grafis Pendukung</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1-7rKYze0gdsIOOnxmBgY6cEC0D5vsuDz/preview', 'Media Publikasi Visual')">
+                <i class="fa-solid fa-display card-icon"></i>
+                <h3>Media Publikasi Visual</h3>
+                <p>Desain Konten & Tata Letak DKV</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+            <div class="card" onclick="openModal('https://drive.google.com/file/d/1HchuAjUm3Krex9a3vWNAqFgmeJaQSSsJ/preview', 'Eksperimen Desain DKV')">
+                <i class="fa-solid fa-swatchbook card-icon"></i>
+                <h3>Eksperimen Desain DKV</h3>
+                <p>Kumpulan Proyek & Tugas Kreatif</p>
+                <span class="btn-preview"><i class="fa-solid fa-eye"></i> Lihat Preview</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOOLS & SKILLS -->
+    <section class="animated-section">
+        <div class="section-title">
+            <h2>Software & Skill</h2>
+        </div>
+        <div class="tags" style="margin-bottom: 15px; justify-content: center;">
+            <div class="tag"><i class="fa-solid fa-pen-nib"></i> Photoshop</div>
+            <div class="tag"><i class="fa-solid fa-palette"></i> Canva</div>
+            <div class="tag"><i class="fa-solid fa-video"></i> CapCut</div>
+            <div class="tag"><i class="fa-solid fa-clapperboard"></i> Alight Motion</div>
+        </div>
+        <div class="tags" style="justify-content: center;">
+            <span class="tag" style="background: rgba(56, 189, 248, 0.1); border-color: var(--accent-color);">Graphic Design</span>
+            <span class="tag" style="background: rgba(56, 189, 248, 0.1); border-color: var(--accent-color);">Photo Editing</span>
+            <span class="tag" style="background: rgba(56, 189, 248, 0.1); border-color: var(--accent-color);">Typography</span>
+            <span class="tag" style="background: rgba(56, 189, 248, 0.1); border-color: var(--accent-color);">Layout & Branding</span>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Hikmal Muhamad Irawan. All Rights Reserved.</p>
+    </footer>
+
+    <!-- MODAL POPUP PREVIEW -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Preview Karya</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe id="modalIframe" src="" allow="autoplay"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script Memunculkan Bintang Kecil Berkelip Secara Otomatis
+        const starsContainer = document.getElementById('starsContainer');
+        const numberOfStars = 40;
+
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 2 + 1; // Ukuran 1px - 3px
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            starsContainer.appendChild(star);
+        }
+
+        // Modal Preview Functions
+        function openModal(url, title) {
+            document.getElementById('modalIframe').src = url;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('previewModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('previewModal').style.display = 'none';
+            document.getElementById('modalIframe').src = '';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('previewModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Scroll Reveal Animation Script
+        function revealOnScroll() {
+            const sections = document.querySelectorAll('.animated-section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < windowHeight - 80) {
+                    section.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+    </script>
+</body>
+</html>
